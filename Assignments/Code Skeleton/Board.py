@@ -1,13 +1,13 @@
 from Block import Block
 import random
 class Board:
-    def __init__(self):
+    def __init__(self, width:int=10, hight:int=20):
         self.next_block = Block()
         self.cur_block = Block()
-        self.board = [[0] * 10 for _ in range(20)] # 10 * 20 board
-        self.blockDumped = False
-        self.blockStuck = False
-        self.needDump = False
+        self.width = width
+        self.hight = hight
+        self.board = [[0 for _ in range(width)] for _ in range(hight)] # 10 * 20 board
+        
     
     # check if current block is valid
     def isBlockValid(self, x:int, y:int)->bool:
@@ -18,22 +18,14 @@ class Board:
         '''
         for i in range(4):
             for j in range(4):
-                if (self.cur_block.getShape()[i][j] and self.board[x + i][y + j]):
+                try:
+                    if (self.cur_block.getShape()[i][j] and self.board[x + i][y + j]):
+                        return False
+                except:
                     return False
         return True
     
-    def isStuck(self)->bool:
-        return self.blockStuck
     
-    def dumpNeeded(self, dump:bool)->None:
-        self.needDump = dump
-        return
-    
-    def getDump(self)->bool:
-        return self.needDump
-    
-    def dumped(self)->bool:
-        return self.blockDumped
     
     # move the block downward by 1 positon if the move is valid, otherwise do nothing 
     def tryMoveDown(self)->None:
