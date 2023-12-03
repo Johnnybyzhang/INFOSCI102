@@ -85,6 +85,16 @@ class Board:
             self.curBlock.rotateLeft()
         return
     
+    def tryHardDrop(self)->None:
+        '''
+        None -> None
+        
+        drop the block to the bottom of the board
+        '''
+        while self.isBlockValid(self.curBlock.x, self.curBlock.y + 1):
+            self.curBlock.moveDown()
+        return
+    
     # write current shape to the board permanently
     def dump(self)->None:
         for i in range(4):
