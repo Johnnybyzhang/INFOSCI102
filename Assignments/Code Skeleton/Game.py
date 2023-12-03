@@ -7,6 +7,7 @@ class Game:
         self.kb = KBHit() # a class that read input from the keyboard
         self.tickrate = 10
         self.gameOver = False
+        #gameState = enumerate()
 
     # start the game
     def run(self)->None:

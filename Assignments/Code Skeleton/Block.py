@@ -200,6 +200,8 @@ class Block:
         move the current block leftward by one
         '''
         self.x -= 1
+        if self.x <0 :
+            self.x = 0
         return
     
     # return current shape of the block
