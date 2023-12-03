@@ -10,12 +10,27 @@ class Board:
         
     
     # check if current block is valid
-    def isBlockValid(self, x:int, y:int)->bool:
+    def isBlockValid(self, x:int, y:int, rotate:bool=False)->bool:
         '''
         None -> bool
         
         Check if the current block is valid at position (x, y)
         '''
+        def rotateHelper(x:int, y:int)->bool:
+            '''
+            None -> bool
+            
+            Check if the current block is valid at position (x, y) after rotation
+            '''
+            rotation = self.curBlock.current_direction
+            self.curBlock.rotateLeft()
+            isValid = self.isBlockValid(x, y)
+            self.curBlock.current_direction = rotation
+            return isValid
+            
+        if rotate:
+            return rotateHelper(x, y)
+        
         for i in range(4):
             for j in range(4):
                 if (self.curBlock.getShape()[j][i]==0):
@@ -58,6 +73,16 @@ class Board:
         '''
         if self.isBlockValid(self.curBlock.x - 1, self.curBlock.y):
             self.curBlock.moveLeft()
+        return
+    
+    def tryRotate(self)->None:
+        '''
+        None -> None
+        
+        check if the block can rotate, if yes, rotate, otherwise do nothing
+        '''
+        if self.isBlockValid(self.curBlock.x, self.curBlock.y, rotate=True):
+            self.curBlock.rotateLeft()
         return
     
     # write current shape to the board permanently
