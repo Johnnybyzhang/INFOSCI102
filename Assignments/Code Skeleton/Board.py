@@ -6,7 +6,7 @@ class Board:
         self.curBlock = Block(type=random.randint(0,6))
         self.width = width
         self.hight = hight
-        self.board = [[0 for _ in range(width)] for _ in range(hight)] # board size: width by hight (defaults to 10 * 20)
+        self.board = [[0 for _ in range(width)] for _ in range(hight)] # board size: width by height (defaults to 10 * 20)
         
     
     # check if current block is valid
@@ -111,7 +111,7 @@ class Board:
     
     # return the current board with block on it 
     def toString(self)->str:
-        tmp = [self.board[i][:] for i in range(self.hight)] #updated for 10*24 board
+        tmp = [self.board[i][:] for i in range(self.hight)] #updated for any*any board
         for i in range(4):
             for j in range(4):
                 if self.curBlock.getShape()[j][i]:
