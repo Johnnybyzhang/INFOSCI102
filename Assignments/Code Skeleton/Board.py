@@ -3,10 +3,11 @@ import random
 class Board:
     def __init__(self, width:int=10, hight:int=20):
         self.nextBlock = Block(type=random.randint(0,6),x=width//2+2)
-        self.curBlock = Block(type=random.randint(0,6))
+        self.curBlock = Block(type=random.randint(0,6),x=width//2+2)
         self.width = width
         self.hight = hight
         self.stable = False
+        self.score = 0
         self.board = [[0 for _ in range(width)] for _ in range(hight)] # board size: width by height (defaults to 10 * 20)
         
     
@@ -65,6 +66,7 @@ class Board:
         '''
         if self.isBlockValid(self.curBlock.x, self.curBlock.y +1):
             self.curBlock.moveDown()
+            self.score += 10
         else:
             self.stable = True
         return
@@ -122,17 +124,13 @@ class Board:
                 counter += 1
                 self.board.insert(0, [0 for _ in range(self.width)])
         if counter == 1:
-            # For future improvements
-            None
+            self.score += 100
         elif counter == 2:
-            # For future improvements
-            None
+            self.score += 300
         elif counter == 3:
-            # For future improvements
-            None
+            self.score += 500
         elif counter == 4:
-            # For future improvements
-            None
+            self.score += 800
         return
     
     # write current shape to the board permanently
@@ -146,7 +144,7 @@ class Board:
     # put a new block on the top of the board
     def putNewBlock(self)->None:
         self.curBlock = self.nextBlock
-        self.nextBlock = Block(type=random.randint(0,6))
+        self.nextBlock = Block(type=random.randint(0,6),x=self.width//2+2)
         self.stable = False
         return
     

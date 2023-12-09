@@ -212,3 +212,20 @@ class Block:
         return the shape of the block
         '''
         return self.shapes[self.type][self.current_direction]
+
+    def getFormattedShape(self)->"str":
+        '''
+        None -> str
+        
+        return the shape of the block in string format
+        '''
+        shape = self.getShape()
+        result = ""
+        for i in range(len(shape)):
+            for j in range(len(shape[0])):
+                if shape[i][j]:
+                    result += "X"
+                else:
+                    result += " "
+            result += "\n"
+        return result
