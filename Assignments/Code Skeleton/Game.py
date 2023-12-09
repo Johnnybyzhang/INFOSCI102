@@ -19,8 +19,32 @@ class Game:
         self.stdscr.keypad(True)
 
     # start the game
+    
+    def selectDifficulty(self)->None:
+        '''
+        None -> None
+        Prompts the user to select a difficulty level.
+        '''
+        print("Select a difficulty level (1-5):")
+        print("1. Easy")
+        print("2. Normal")
+        print("3. Hard")
+        print("4. Expert")
+        print("5. Impossible")
+        while True:
+            try:
+                level = int(input("Level: "))
+                if level in range(1,6):
+                    break
+            except:
+                pass
+            print("Invalid input. Please try again.")
+        self.tickrate = 2*level-1
+        return
+    
     def run(self)->None:
         print("Welcome to Tetris!")
+        self.selectDifficulty()
         tick = time()
         while (not self.gameOver):
             if self.kb.kbhit():
