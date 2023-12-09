@@ -2,10 +2,11 @@ from Block import Block
 import random
 class Board:
     def __init__(self, width:int=10, hight:int=20):
-        self.nextBlock = Block(type=random.randint(0,6),x=width//2)
+        self.nextBlock = Block(type=random.randint(0,6),x=width//2+2)
         self.curBlock = Block(type=random.randint(0,6))
         self.width = width
         self.hight = hight
+        self.stable = False
         self.board = [[0 for _ in range(width)] for _ in range(hight)] # board size: width by height (defaults to 10 * 20)
         
     
@@ -42,7 +43,18 @@ class Board:
                     return False
         return True
     
-    
+    def checkGameOver(self)->bool:
+        '''
+        None -> bool
+        
+        Check if the game is over
+        '''
+        for i in range(4):
+            for j in range(4):
+                if (self.curBlock.getShape()[j][i]):
+                    if self.board[self.curBlock.y+j][self.curBlock.x+i]:
+                        return True
+        return False
     
     # move the block downward by 1 positon if the move is valid, otherwise do nothing 
     def tryMoveDown(self)->None:
@@ -53,6 +65,8 @@ class Board:
         '''
         if self.isBlockValid(self.curBlock.x, self.curBlock.y +1):
             self.curBlock.moveDown()
+        else:
+            self.stable = True
         return
     
     def tryMoveRight(self)->None:   
@@ -95,6 +109,32 @@ class Board:
             self.curBlock.moveDown()
         return
     
+    def clearLine(self)->None:
+        '''
+        None -> None
+        
+        clear all the full lines
+        '''
+        counter = 0
+        for i in range(self.hight):
+            if sum(self.board[i]) == self.width:
+                self.board.pop(i)
+                counter += 1
+                self.board.insert(0, [0 for _ in range(self.width)])
+        if counter == 1:
+            # For future improvements
+            None
+        elif counter == 2:
+            # For future improvements
+            None
+        elif counter == 3:
+            # For future improvements
+            None
+        elif counter == 4:
+            # For future improvements
+            None
+        return
+    
     # write current shape to the board permanently
     def dump(self)->None:
         for i in range(4):
@@ -107,6 +147,7 @@ class Board:
     def putNewBlock(self)->None:
         self.curBlock = self.nextBlock
         self.nextBlock = Block(type=random.randint(0,6))
+        self.stable = False
         return
     
     # return the current board with block on it 

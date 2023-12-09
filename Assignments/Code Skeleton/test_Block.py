@@ -65,6 +65,13 @@ class TestBoard(unittest.TestCase):
             self.assertLessEqual(board.curBlock.y, 18)
             board.dump()
             self.assertGreater(sum([sum(x) for x in board.board]),0)
+            
+        def testClearLine(self):
+            board = Board()
+            for i in range(10):
+                board.board[19][i] = 1
+            board.clearLine()
+            self.assertEqual(sum([sum(x) for x in board.board]), 0)
 
 if __name__ == '__main__':
     unittest.main()
